@@ -1,0 +1,274 @@
+:root {
+  --primary: #014F86;
+  --accent: #FFD166;
+  --white: #ffffff;
+  --light: #f9f9f9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--light);
+  color: var(--primary);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--white);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+nav a {
+  margin-left: 1.2rem;
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--accent);
+}
+
+/* Hero Section */
+.hero-slider {
+  position: relative;
+  height: 70vh;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: rgba(1, 79, 134, 0.65);
+  padding: 2rem 3rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.hero-overlay h1 {
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-overlay p {
+  color: #eaf2f8;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.cta-btn {
+  background: var(--accent);
+  color: var(--primary);
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.cta-btn:hover {
+  background: #e2b355;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+/* Mission, Vision, Cards */
+.mission-vision {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.box {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.why-choose {
+  text-align: center;
+}
+
+.choose-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.choose-card {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.choose-card i {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+
+.choose-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Gallery and Video */
+.media-wrap {
+  max-width: 800px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.media-wrap video {
+  width: 100%;
+  display: block;
+}
+
+/* Testimonials */
+.testimonials {
+  text-align: center;
+}
+
+.testi-slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  scroll-snap-type: x mandatory;
+}
+
+.testi-card {
+  min-width: 300px;
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  scroll-snap-align: start;
+}
+
+/* Core Values */
+.core-values .values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.value-box {
+  background: var(--accent);
+  color: var(--primary);
+  padding: 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* WhatsApp Button */
+.whatsapp-float {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 60px;
+  height: 60px;
+  z-index: 999;
+}
+
+/* Forms and Login */
+.login-section {
+  max-width: 400px;
+  margin: 3rem auto;
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.login-section h1 {
+  margin-bottom: 1.5rem;
+}
+
+.login-section input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* Table Style */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.data-table th {
+  background: var(--primary);
+  color: #fff;
+}
+
+.data-table tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+  .mission-vision {
+    grid-template-columns: 1fr;
+  }
+  .hero-overlay h1 {
+    font-size: 1.8rem;
+  }
+  .hero-overlay p {
+    font-size: 1rem;
+  }
+}
