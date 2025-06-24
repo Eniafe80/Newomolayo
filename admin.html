@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title><link rel="stylesheet" href="style.css">
+  <script>
+    if (localStorage.getItem("role")!=="admin") location.href="portal.html";
+  </script>
+</head>
+<body>
+  <section class="container">
+    <h1>Welcome Admin, <span id="adminName"></span></h1>
+    <h2>Quick Actions</h2>
+    <ul>
+      <li><button class="cta-btn">Upload Student Results (coming soon)</button></li>
+      <li><button class="cta-btn">Update Timetable (coming soon)</button></li>
+      <li><button class="cta-btn">Add New Student (coming soon)</button></li>
+    </ul>
+    <p><a href="#" onclick="logout()">🔒 Logout</a></p>
+  </section>
+  <script>
+    document.getElementById("adminName").textContent = localStorage.getItem("studentName");
+    function logout() {
+      localStorage.clear();
+      window.location.href = "portal.html";
+    }
+  </script>
+</body>
+</html>
