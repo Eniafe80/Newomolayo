@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ✅ Logo Header -->
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Omolayo Logo" style="height: 50px;">
+    </div>
+  </header>
+
+  <section class="container login-section">
+    <h1>Student Portal Login</h1>
+    <form id="loginForm">
+      <label>Username: <input id="username" required /></label>
+      <label>Password: <input type="password" id="password" required /></label>
+      <button type="submit" class="cta-btn">Login</button>
+    </form>
+    <p id="error-msg" style="display:none;color:red;">Invalid credentials</p>
+  </section>
+
+  <script src="portal.js"></script>
+</body>
+</html>
