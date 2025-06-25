@@ -2,12 +2,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Omolayo International Schools</title>  <!-- Lightbox Gallery CSS (optional) -->  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />  <!-- Main CSS -->  <link rel="stylesheet" href="style.css" />
-</head><body>
-  <!-- Splash Logo -->
-  <div id="splash">
-    <img src="logo.png" alt="Omolayo Logo" />
-  </div>  <!-- Header -->  <header>
+  <title>Omolayo International Schools</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
+  <style>
+    .hero-slider {
+      position: relative;
+      height: 85vh;
+      overflow: hidden;
+    }
+    .hero-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .hero-slide.active {
+      opacity: 1;
+      z-index: 2;
+    }
+    .hero-slide h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .cta-btn {
+      margin-top: 1.5rem;
+      background: #014F86;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      text-decoration: none;
+      font-size: 1rem;
+      border-radius: 5px;
+    }
+    footer {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease;
+    }
+    footer.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
     <div class="logo">
       <img src="logo.png" alt="Omolayo Logo" style="height: 50px;">
     </div>
@@ -18,21 +69,23 @@
       <a href="academics.html">Academics</a>
       <a href="portal.html">Login</a>
     </nav>
-  </header>  <!-- Hero Section -->  <section class="hero-slider">
-    <div class="hero-content">
+  </header>  <!-- Hero Slider Section -->  <section class="hero-slider">
+    <div class="hero-slide active" style="background-image: url('placeholder1.jpg');">
       <h1>Welcome to Omolayo International Schools</h1>
       <p>Rooted in Excellence, Reaching Beyond</p>
       <a href="admissions.html" class="cta-btn">Apply Now</a>
     </div>
-  </section>  <!-- Gallery (Placeholder until images available) -->  <section class="photo-gallery container">
-    <h2>Campus Gallery</h2>
-    <div class="gallery-grid">
-      <a href="gallery1.jpg" data-lightbox="campus"><img src="gallery1.jpg" alt="Gallery 1"></a>
-      <a href="gallery2.jpg" data-lightbox="campus"><img src="gallery2.jpg" alt="Gallery 2"></a>
-      <a href="gallery3.jpg" data-lightbox="campus"><img src="gallery3.jpg" alt="Gallery 3"></a>
-      <a href="gallery4.jpg" data-lightbox="campus"><img src="gallery4.jpg" alt="Gallery 4"></a>
+    <div class="hero-slide" style="background-image: url('placeholder2.jpg');">
+      <h1>Innovative Learning Environment</h1>
+      <p>Empowering future leaders through knowledge</p>
+      <a href="academics.html" class="cta-btn">Explore Academics</a>
     </div>
-  </section>  <!-- Footer Logo -->  <div class="footer-logo" style="text-align:center; margin-bottom: 1rem;">
+    <div class="hero-slide" style="background-image: url('placeholder3.jpg');">
+      <h1>Admissions Open</h1>
+      <p>Secure your child's future today</p>
+      <a href="admissions.html" class="cta-btn">Get Started</a>
+    </div>
+  </section>  <!-- Footer Logo -->  <div class="footer-logo" style="text-align:center; margin: 2rem 0 1rem;">
     <img src="logo.png" alt="Omolayo Logo" style="height: 60px;">
   </div>  <!-- Footer Section -->  <footer>
     <div class="footer-content container">
@@ -55,7 +108,17 @@
       </div>
     </div>
     <p style="text-align:center; padding: 1rem;">&copy; 2025 Omolayo International Schools</p>
-  </footer>  <!-- Lightbox JS (optional) -->  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>  <!-- Footer Reveal on Scroll -->  <script>
+  </footer>  <!-- Lightbox2 JS -->  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>  <!-- JS for Slider and Footer Animation -->  <script>
+    // Slider functionality
+    const slides = document.querySelectorAll('.hero-slide');
+    let currentSlide = 0;
+    setInterval(() => {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 4000);
+
+    // Footer reveal
     window.addEventListener("scroll", () => {
       const footer = document.querySelector("footer");
       if (!footer) return;
