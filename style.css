@@ -279,6 +279,17 @@ nav a.active {
   height: 100%;
   background: white;
   display: flex;
+  
+  footer {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+}
+
+footer.visible {
+  opacity: 1;
+  transform: translateY(0);
+  }
   justify-content: center;
   align-items: center;
   z-index: 9999;
