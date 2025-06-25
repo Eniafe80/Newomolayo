@@ -1,132 +1,111 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Omolayo International Schools</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
   <style>
-    .hero-slider {
-      position: relative;
-      height: 85vh;
-      overflow: hidden;
-    }
-    .hero-slide {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-      padding: 1rem;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-    .hero-slide.active {
-      opacity: 1;
-      z-index: 2;
-    }
-    .hero-slide h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-    .cta-btn {
-      margin-top: 1.5rem;
-      background: #014F86;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      text-decoration: none;
-      font-size: 1rem;
-      border-radius: 5px;
-    }
-    footer {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 1s ease;
-    }
-    footer.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    body { font-family: Arial, sans-serif; margin: 0; }
+    header, footer { padding: 1rem; background: white; text-align: center; }
+    nav a { margin: 0 10px; text-decoration: none; color: #014F86; font-weight: bold; }
+    .hero-slider { position: relative; height: 85vh; background: url('placeholder1.jpg') no-repeat center center/cover; display: flex; align-items: center; justify-content: center; color: white; text-align: center; }
+    .hero-overlay { position: absolute; width: 100%; height: 100%; background: rgba(1, 79, 134, 0.6); top: 0; left: 0; }
+    .hero-content { position: relative; z-index: 2; }
+    .cta-btn { background: #FFD166; color: #003366; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 1rem; }
+    .section { padding: 3rem 1rem; text-align: center; }
+    .colored-section { background: #f4faff; }
+    .book-box { background: #FFD166; padding: 2rem; margin: 1rem auto; max-width: 800px; border-radius: 8px; }
+    .choose-boxes { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    .choose-box { background: #EAF4FC; border-left: 5px solid #014F86; padding: 1rem; width: 250px; border-radius: 8px; text-align: left; }
+    img.profile { width: 220px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin-bottom: 1rem; }
+    footer { background: #014F86; color: white; }
+    .footer-content { display: flex; justify-content: space-around; flex-wrap: wrap; }
   </style>
 </head>
-<body>
-  <!-- Header -->
-  <header>
-    <div class="logo">
-      <img src="logo.png" alt="Omolayo Logo" style="height: 50px;">
+<body><header>
+  <img src="logo.png" alt="Omolayo Logo" height="50">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="admissions.html">Admissions</a>
+    <a href="academics.html">Academics</a>
+    <a href="portal.html">Login</a>
+  </nav>
+</header><section class="hero-slider">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Welcome to Omolayo International Schools</h1>
+    <p>Where Character Meets Excellence</p>
+    <a href="admissions.html" class="cta-btn">Apply Now</a>
+  </div>
+</section><section class="section colored-section">
+  <h2>Our Campus</h2>
+  <p>Clean, secure and welcoming environment for quality learning and social growth.</p>
+</section><section class="section">
+  <div class="book-box">
+    <h2>Our Mission</h2>
+    <p>To nurture and empower the next generation of leaders by fostering a culture of character, innovation and social responsibility.</p>
+  </div>
+  <div class="book-box">
+    <h2>Our Vision</h2>
+    <p>Nurturing the whole child's heart, mind and spirit to become compassionate, innovative and socially responsible leaders shaping a brighter future.</p>
+  </div>
+</section><section class="section colored-section">
+  <h2>Why Choose Us?</h2>
+  <div class="choose-boxes">
+    <div class="choose-box">Qualified and Passionate Teachers</div>
+    <div class="choose-box">Strong Academic Foundation</div>
+    <div class="choose-box">Clean, Equipped Classrooms</div>
+    <div class="choose-box">Co-curricular Activities</div>
+    <div class="choose-box">Mentorship and Leadership Programs</div>
+  </div>
+</section><section class="section">
+  <h2>Meet Our Founder</h2>
+  <img src="founder.jpg" alt="Founder - Deaconess Fumi" class="profile">
+  <p>Deaconess Fumi founded Omolayo International Schools with a vision to inspire discipline, character, and academic excellence in every child.</p>
+</section><section class="section colored-section">
+  <h2>Our Proprietress</h2>
+  <img src="proprietress.jpg" alt="Proprietress - Dr. Omolayo" class="profile">
+  <p>Dr. Omolayo is a passionate educationist and administrator committed to nurturing excellence. Her leadership continues to shape generations of global achievers at Omolayo International Schools.</p>
+</section><section class="section">
+  <h2>Now Admitting</h2>
+  <p>We are currently admitting students into:</p>
+  <ul style="list-style-type: none; padding: 0; font-weight: bold;">
+    <li>✔️ Crèche</li>
+    <li>✔️ Nursery 1 & 2</li>
+    <li>✔️ Primary 1 – 6</li>
+    <li>✔️ JSS 1 – 3</li>
+  </ul>
+</section><!-- Photo Gallery --><section class="section colored-section">
+  <h2>Photo Gallery</h2>
+  <p>Get a glimpse of life at Omolayo International Schools</p>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
+    <a href="gallery1.jpg" data-lightbox="school-gallery"><img src="gallery1.jpg" alt="Gallery 1" style="width: 200px; border-radius: 8px;"></a>
+    <a href="gallery2.jpg" data-lightbox="school-gallery"><img src="gallery2.jpg" alt="Gallery 2" style="width: 200px; border-radius: 8px;"></a>
+    <a href="gallery3.jpg" data-lightbox="school-gallery"><img src="gallery3.jpg" alt="Gallery 3" style="width: 200px; border-radius: 8px;"></a>
+    <a href="gallery4.jpg" data-lightbox="school-gallery"><img src="gallery4.jpg" alt="Gallery 4" style="width: 200px; border-radius: 8px;"></a>
+  </div>
+</section><!-- Footer --><footer>
+  <div class="footer-content">
+    <div>
+      <h4>Contact Us</h4>
+      <p>Pora Zone 6, Ajebo Road, Kemta, Idi Aba, Abeokuta</p>
+      <p>📞 0703 510 2126, 0807 675 4105</p>
+      <p>📧 omolayogroup@gmail.com</p>
     </div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="admissions.html">Admissions</a>
-      <a href="academics.html">Academics</a>
-      <a href="portal.html">Login</a>
-    </nav>
-  </header>  <!-- Hero Slider Section -->  <section class="hero-slider">
-    <div class="hero-slide active" style="background-image: url('placeholder1.jpg');">
-      <h1>Welcome to Omolayo International Schools</h1>
-      <p>Rooted in Excellence, Reaching Beyond</p>
-      <a href="admissions.html" class="cta-btn">Apply Now</a>
+    <div>
+      <h4>Quick Links</h4>
+      <a href="about.html" style="color: white;">About Us</a><br>
+      <a href="admissions.html" style="color: white;">Admissions</a><br>
+      <a href="portal.html" style="color: white;">Login</a>
     </div>
-    <div class="hero-slide" style="background-image: url('placeholder2.jpg');">
-      <h1>Innovative Learning Environment</h1>
-      <p>Empowering future leaders through knowledge</p>
-      <a href="academics.html" class="cta-btn">Explore Academics</a>
+    <div>
+      <h4>Follow Us</h4>
+      <a href="https://facebook.com/omolayoschools" style="color: white;">Facebook</a><br>
+      <a href="https://wa.me/2348076754105" style="color: white;">WhatsApp</a>
     </div>
-    <div class="hero-slide" style="background-image: url('placeholder3.jpg');">
-      <h1>Admissions Open</h1>
-      <p>Secure your child's future today</p>
-      <a href="admissions.html" class="cta-btn">Get Started</a>
-    </div>
-  </section>  <!-- Footer Logo -->  <div class="footer-logo" style="text-align:center; margin: 2rem 0 1rem;">
-    <img src="logo.png" alt="Omolayo Logo" style="height: 60px;">
-  </div>  <!-- Footer Section -->  <footer>
-    <div class="footer-content container">
-      <div>
-        <h4>Contact Us</h4>
-        <p>Pora Zone 6, Ajebo Road, Kemta, Idi Aba, Abeokuta</p>
-        <p>📞 0703 510 2126, 0807 675 4105</p>
-        <p>📧 omolayogroup@gmail.com</p>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
-        <a href="about.html">About Us</a><br>
-        <a href="admissions.html">Admissions</a><br>
-        <a href="portal.html">Login</a>
-      </div>
-      <div>
-        <h4>Follow Us</h4>
-        <a href="https://facebook.com/omolayoschools" target="_blank">Facebook</a><br>
-        <a href="https://wa.me/2348076754105" target="_blank">WhatsApp</a>
-      </div>
-    </div>
-    <p style="text-align:center; padding: 1rem;">&copy; 2025 Omolayo International Schools</p>
-  </footer>  <!-- Lightbox2 JS -->  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>  <!-- JS for Slider and Footer Animation -->  <script>
-    // Slider functionality
-    const slides = document.querySelectorAll('.hero-slide');
-    let currentSlide = 0;
-    setInterval(() => {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }, 4000);
-
-    // Footer reveal
-    window.addEventListener("scroll", () => {
-      const footer = document.querySelector("footer");
-      if (!footer) return;
-      const footerTop = footer.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
-      if (footerTop < windowHeight) {
-        footer.classList.add("visible");
-      }
-    });
-  </script></body>
-  </html>
+  </div>
+  <p style="text-align:center; margin-top: 2rem;">&copy; 2025 Omolayo International Schools</p>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script></body>
+    </html>
