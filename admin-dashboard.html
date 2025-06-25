@@ -1,28 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title><link rel="stylesheet" href="style.css">
-  <script>
-    if (localStorage.getItem("role")!=="admin") location.href="portal.html";
-  </script>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <section class="container">
-    <h1>Welcome Admin, <span id="adminName"></span></h1>
-    <h2>Quick Actions</h2>
-    <ul>
-      <li><button class="cta-btn">Upload Student Results (coming soon)</button></li>
-      <li><button class="cta-btn">Update Timetable (coming soon)</button></li>
-      <li><button class="cta-btn">Add New Student (coming soon)</button></li>
-    </ul>
-    <p><a href="#" onclick="logout()">🔒 Logout</a></p>
+  <section class="container result-entry">
+    <h2>Submit Student Results</h2>
+    <form id="resultForm">
+      <label>Class:
+        <select name="class">
+          <option>Creche</option><option>Nursery 1</option><option>Primary 1</option><option>JSS 1</option>
+        </select>
+      </label>
+      <label>Student Name: <input type="text" name="studentName" required></label>
+      <label>Term:
+        <select name="term">
+          <option>First</option><option>Second</option><option>Third</option>
+        </select>
+      </label>
+      <label>Session: <input type="text" name="session" placeholder="2024/2025" required></label>
+      <label>Math Score: <input type="number" name="math" required></label>
+      <label>English Score: <input type="number" name="english" required></label>
+      <label>Science Score: <input type="number" name="science" required></label>
+      <button type="submit" class="cta-btn">Submit</button>
+    </form>
+
+    <div id="preview" style="margin-top:2rem;"></div>
   </section>
+
   <script>
-    document.getElementById("adminName").textContent = localStorage.getItem("studentName");
-    function logout() {
-      localStorage.clear();
-      window.location.href = "portal.html";
-    }
+    document.getElementById('resultForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = new FormData(this);
+      let result = `<h3>Result Preview</h3>`;
+      data.forEach((value, key) => {
+        result += `<p><strong>${key}</strong>: ${value}</p>`;
+      });
+      document.getElementById('preview').innerHTML = result;
+    });
   </script>
 </body>
-</html>
+  </html>
