@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section class="container login-section">
+    <h2>Admin Login</h2>
+    <form id="adminLoginForm">
+      <label>Username: <input type="text" id="adminUsername" required></label>
+      <label>Password: <input type="password" id="adminPassword" required></label>
+      <button type="submit" class="cta-btn">Login</button>
+    </form>
+    <p id="login-error" style="color: red; display: none;">Invalid credentials</p>
+  </section>
+
+  <script>
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('adminUsername').value;
+      const pass = document.getElementById('adminPassword').value;
+
+      if (user === 'admin1' && pass === 'admin123') {
+        localStorage.setItem("role", "admin");
+        localStorage.setItem("studentName", user); // optional
+        window.location.href = 'admin-dashboard.html';
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
