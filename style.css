@@ -15,8 +15,15 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background-color: var(--light);
   color: var(--primary);
+  opacity: 0;
+  animation: bodyFade 1.2s ease 2.5s forwards;
 }
 
+@keyframes bodyFade {
+  to { opacity: 1; }
+}
+
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -26,120 +33,50 @@ header {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.mission-vision {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
+/* Hero Slider */
 .hero-slider {
   position: relative;
   height: 85vh;
   width: 100%;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-
 .hero-overlay {
+  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(1, 79, 134, 0.6);
-  z-index: 1;
 }
-
 .hero-content {
   position: relative;
   z-index: 2;
-  color: white;
+  color: var(--white);
   text-align: center;
 }
 
-.box {
+/* Sections and Boxes */
+.section,
+.box,
+.choose-card,
+.admission-form,
+.login-section,
+.result-entry {
   background: var(--white);
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.why-choose {
-  text-align: center;
-}
-
-.choose-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-.choose-card {
-  background: var(--white);
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  transition: 0.3s;
-}
-
-.choose-card i {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  color: var(--primary);
-}
-
-.choose-card:hover {
-  transform: translateY(-5px);
-}
-
-/* Gallery and Video */
-.media-wrap {
-  max-width: 800px;
-  margin: auto;
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.media-wrap video {
-  width: 100%;
-  display: block;
-}
-
-/* Testimonials */
-.testimonials {
-  text-align: center;
-}
-
-.testi-slider {
-  display: flex;
-  overflow-x: auto;
-  gap: 1rem;
-  scroll-snap-type: x mandatory;
-}
-
-.testi-card {
-  min-width: 300px;
-  background: var(--white);
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  scroll-snap-align: start;
+  margin: 2rem auto;
+  max-width: 700px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Core Values */
-.core-values .values-grid {
+.core-values .values-grid,
+.values-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
 }
-
 .value-box {
   background: var(--accent);
   color: var(--primary);
@@ -149,7 +86,111 @@ header {
   text-align: center;
 }
 
-/* WhatsApp Button */
+/* Why Choose Section */
+.why-choose {
+  text-align: center;
+}
+.choose-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.choose-card {
+  transition: transform 0.3s;
+}
+.choose-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Media Section */
+.media-wrap {
+  max-width: 800px;
+  margin: 2rem auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.media-wrap video {
+  width: 100%;
+  display: block;
+}
+
+/* Testimonials */
+.testimonials {
+  text-align: center;
+}
+.testi-slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  scroll-snap-type: x mandatory;
+}
+.testi-card {
+  min-width: 300px;
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  scroll-snap-align: start;
+}
+
+/* Tables */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.data-table th,
+.data-table td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+}
+.data-table th {
+  background: var(--primary);
+  color: var(--white);
+}
+.data-table tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+/* Forms */
+.admission-form label,
+.login-section label,
+.result-entry label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.admission-form input,
+.admission-form select,
+.admission-form textarea,
+.login-section input,
+.result-entry input,
+.result-entry select {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Buttons */
+.cta-btn {
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.cta-btn:hover {
+  background-color: #002f66;
+}
+
+/* WhatsApp Floating Button */
 .whatsapp-float {
   position: fixed;
   right: 20px;
@@ -159,183 +200,66 @@ header {
   z-index: 999;
 }
 
-/* Forms and Login */
-.login-section {
-  max-width: 400px;
-  margin: 3rem auto;
-  background: var(--white);
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.login-section h1 {
-  margin-bottom: 1.5rem;
-}
-
-.login-section input {
-  width: 100%;
-  padding: 0.8rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-/* Table Style */
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-.data-table th,
-.data-table td {
-  border: 1px solid #ccc;
-  padding: 0.75rem;
-  text-align: left;
-}
-
-.data-table th {
-  background: var(--primary);
-  color: #fff;
-}
-
-.data-table tr:nth-child(even) {
-  background: #f2f2f2;
-}
-
-/* Responsive */
-@media(max-width: 768px) {
-  .mission-vision {
-    grid-template-columns: 1fr;
-  }
-  .hero-overlay h1 {
-    font-size: 1.8rem;
-  }
-  .hero-overlay p {
-    font-size: 1rem;
-  }
-}
-
+/* Splash Screen */
 #splash {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: white;
+  background: var(--white);
   display: flex;
-  
-  footer {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: all 1s ease;
-}
-
-footer.visible {
-  opacity: 1;
-  transform: translateY(0);
-  }
   justify-content: center;
   align-items: center;
   z-index: 9999;
   animation: fadeOut 2.5s forwards;
 }
-
 #splash img {
   width: 120px;
   animation: pulse 2s ease;
 }
-
 @keyframes fadeOut {
   0% { opacity: 1; }
   90% { opacity: 1; }
   100% { opacity: 0; visibility: hidden; }
 }
-.admission-form {
-  background: var(--white);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  max-width: 700px;
-  margin: 2rem auto;
-}
-.admission-form label {
-  display: block;
-  margin-bottom: 1rem;
-  font-weight: 500;
-}
-.admission-form input,
-.admission-form select,
-.admission-form textarea {
-  width: 100%;
-  padding: 0.7rem;
-  margin-top: 0.25rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.admission-form button {
-  margin-top: 1rem;
-  background-color: var(--primary);
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  }
 @keyframes pulse {
   0% { transform: scale(1); opacity: 0; }
   50% { transform: scale(1.1); opacity: 1; }
   100% { transform: scale(1); }
 }
 
-
-body {
-  animation: bodyFade 1.2s ease 2.5s forwards;
+/* Fade-in Animation */
+.fade-in {
   opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.8s ease forwards;
 }
-
-@keyframes bodyFade {
-  to { opacity: 1; }
-  .login-section,
-.result-entry {
-  max-width: 600px;
-  margin: 2rem auto;
-  background: var(--white);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.login-section label,
-.result-entry label {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.login-section input,
-.result-entry input,
-.result-entry select {
-  width: 100%;
-  padding: 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-.cta-btn {
-  background: #004080;
-  color: #fff;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: background 0.3s ease;
-}
-.cta-btn:hover {
-  background: #002f66;
 }
 
-.section {
-  padding: 3rem 2rem;
-  margin-bottom: 2rem;
-  border-radius: 8px;
-  background: #f9f9f9;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    }
+/* Footer Animation */
+footer {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+}
+footer.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mission-vision {
+    grid-template-columns: 1fr;
+  }
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+                             }
