@@ -1,44 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Admin Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard | Omolayo</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <section class="container result-entry">
-    <h2>Submit Student Results</h2>
-    <form id="resultForm">
-      <label>Class:
-        <select name="class">
-          <option>Creche</option><option>Nursery 1</option><option>Primary 1</option><option>JSS 1</option>
-        </select>
-      </label>
-      <label>Student Name: <input type="text" name="studentName" required></label>
-      <label>Term:
-        <select name="term">
-          <option>First</option><option>Second</option><option>Third</option>
-        </select>
-      </label>
-      <label>Session: <input type="text" name="session" placeholder="2024/2025" required></label>
-      <label>Math Score: <input type="number" name="math" required></label>
-      <label>English Score: <input type="number" name="english" required></label>
-      <label>Science Score: <input type="number" name="science" required></label>
-      <button type="submit" class="cta-btn">Submit</button>
+  <section class="container">
+    <h1>Welcome, Admin 👋</h1>
+    <p>Manage messages, users, and platform updates here.</p>
+
+    <hr />
+
+    <!-- 🔔 Post homepage popup message -->
+    <h2>📢 Post Homepage Message</h2>
+    <form id="messageForm">
+      <textarea id="popupMessage" rows="3" placeholder="Write a short message to show on homepage..."></textarea><br>
+      <button type="submit" class="cta-btn">Save Message</button>
     </form>
 
-    <div id="preview" style="margin-top:2rem;"></div>
+    <hr />
+
+    <!-- 👥 Add New User -->
+    <h2>➕ Add Teacher or Student</h2>
+    <form id="addUserForm">
+      <label>Email: <input type="email" id="newEmail" required /></label><br>
+      <label>Password: <input type="password" id="newPassword" required /></label><br>
+      <label>Role:
+        <select id="newRole">
+          <option value="teacher">Teacher</option>
+          <option value="student">Student</option>
+        </select>
+      </label><br>
+      <label>Class (e.g. Primary 3): <input type="text" id="newClass" /></label><br>
+      <button type="submit" class="cta-btn">Create User</button>
+    </form>
+
+    <hr />
+    <button onclick="logout()" class="cta-btn" style="background:#ccc;">Logout</button>
   </section>
 
-  <script>
-    document.getElementById('resultForm').addEventListener('submit', function(e) {
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, collection } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAm7bKotH4ly67inPPdruhppa42fWYH5OY",
+      authDomain: "omolayoschool-29c90.firebaseapp.com",
+      projectId: "omolayoschool-29c90",
+      storageBucket: "omolayoschool-29c90.firebasestorage.app",
+      messagingSenderId: "92639111131",
+      appId: "1:92639111131:web:d7cc04cff3da1b97d0e9fe"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // ✅ Save homepage popup message
+    document.getElementById("messageForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const data = new FormData(this);
-      let result = `<h3>Result Preview</h3>`;
-      data.forEach((value, key) => {
-        result += `<p><strong>${key}</strong>: ${value}</p>`;
+      const msg = document.getElementById("popupMessage").value;
+      await setDoc(doc(db, "settings", "popup"), { message: msg });
+      alert("Message saved!");
+    });
+
+    // ✅ Add new teacher/student account
+    document.getElementById("addUserForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("newEmail").value;
+      const password = document.getElementById("newPassword").value;
+      const role = document.getElementById("newRole").value;
+      const classGroup = document.getElementById("newClass").value;
+
+      try {
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = userCred.user.uid;
+
+        await setDoc(doc(db, "users", uid), {
+          email,
+          role,
+          class: classGroup
+        });
+
+        alert("✅ User created successfully!");
+      } catch (err) {
+        alert("⚠️ Error: " + err.message);
+      }
+    });
+
+    // ✅ Logout function
+    function logout() {
+      signOut(auth).then(() => {
+        window.location.href = "portal.html";
       });
-      document.getElementById('preview').innerHTML = result;
+    }
+
+    // ✅ Security: Block if not admin
+    onAuthStateChanged(auth, (user) => {
+      // Optionally add admin check later
+      if (!user) window.location.href = "portal.html";
     });
   </script>
 </body>
-  </html>
+</html>
