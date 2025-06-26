@@ -116,6 +116,21 @@
     function logout() {
       signOut(auth).then(() => window.location.href = "portal.html");
     }
+
+    document.getElementById("announcementForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const text = document.getElementById("announcementText").value.trim();
+  if (!text) return;
+
+  await addDoc(collection(db, "announcements"), {
+    text,
+    from: teacherEmail,
+    timestamp: new Date()
+  });
+
+  document.getElementById("announceMsg").textContent = "✅ Announcement posted!";
+  e.target.preset();
+});
   </script>
 </body>
 </html>
