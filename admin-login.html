@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section class="container login-section">
+    <h2>🔐 Admin Login</h2>
+
+    <form id="adminLoginForm">
+      <label for="adminUsername">Username:</label>
+      <input type="text" id="adminUsername" required />
+
+      <label for="adminPassword">Password:</label>
+      <input type="password" id="adminPassword" required />
+
+      <button type="submit" class="cta-btn">Login</button>
+    </form>
+
+    <p id="login-error" style="color: red; display: none; margin-top: 1rem;">
+      ❌ Invalid username or password.
+    </p>
+  </section>
+
+  <script>
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('adminUsername').value.trim();
+      const pass = document.getElementById('adminPassword').value.trim();
+
+      // Default login
+      if (user === 'admin1' && pass === 'admin123') {
+        localStorage.setItem("role", "admin");
+        localStorage.setItem("adminName", user);
+        window.location.href = 'admin-dashboard.html';
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
