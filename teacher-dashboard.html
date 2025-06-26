@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Dashboard | Omolayo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section class="container">
+    <h1>Teacher Dashboard</h1>
+    <p>Welcome, <span id="teacherName"></span> — Class: <strong id="className"></strong></p>
+
+    <hr />
+
+    <!-- Add / Update Results -->
+    <h2>Enter / Update Student Result</h2>
+    <form id="resultForm">
+      <label>Student Email: <input type="email" id="studentEmail" required /></label><br>
+      <label>Subject: <input type="text" id="subject" required /></label><br>
+      <label>Score: <input type="number" id="score" required min="0" max="100" /></label><br>
+      <button type="submit" class="cta-btn">Submit Result</button>
+    </form>
+    <div id="resultMessage" style="margin-top:1rem;"></div>
+
+    <hr />
+
+    <!-- View Class Results -->
+    <h2>Class Results</h2>
+    <table id="resultsTable" class="data-table">
+      <thead>
+        <tr><th>Student Email</th><th>Subject</th><th>Score</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <hr />
+    <button onclick="logout()" class="cta-btn" style="background:#ccc;">Logout</button>
+  </section>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAm7bKotH4ly67inPPdruhppa42fWYH5OY",
+      authDomain: "omolayoschool-29c90.firebaseapp.com",
+      projectId: "omolayoschool-29c90",
+      storageBucket: "omolayoschool-29c90.firebasestorage.app",
+      messagingSenderId: "92639111131",
+      appId: "1:92639111131:web:d7cc04cff3da1b97d0e9fe"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let teacherEmail = "", teacherClass = "";
+
+    onAuthStateChanged(auth, async user => {
+      if (!user) return window.location.href = "portal.html";
+
+      const userSnap = await getDoc(doc(db, "users", user.uid));
+      if (!userSnap.exists() || userSnap.data().role !== "teacher") {
+        alert("Access denied.");
+        return window.location.href = "portal.html";
+      }
+
+      teacherEmail = userSnap.data().email;
+      teacherClass = userSnap.data().class;
+      document.getElementById("teacherName").textContent = teacherEmail;
+      document.getElementById("className").textContent = teacherClass;
+      loadResults();
+    });
+
+    document.getElementById("resultForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const sEmail = document.getElementById("studentEmail").value;
+      const subj = document.getElementById("subject").value;
+      const score = Number(document.getElementById("score").value);
+
+      await addDoc(collection(db, "results"), {
+        teacher: teacherEmail,
+        class: teacherClass,
+        studentEmail: sEmail,
+        subject: subj,
+        score,
+        timestamp: new Date()
+      });
+
+      document.getElementById("resultMessage").textContent = "✅ Result submitted!";
+      loadResults();
+      e.target.reset();
+    });
+
+    async function loadResults() {
+      const q = query(collection(db, "results"), where("class", "==", teacherClass));
+      const snaps = await getDocs(q);
+      const tbody = document.querySelector("#resultsTable tbody");
+      tbody.innerHTML = "";
+      snaps.forEach(docSnap => {
+        const r = docSnap.data();
+        const row = `<tr><td>${r.studentEmail}</td><td>${r.subject}</td><td>${r.score}</td></tr>`;
+        tbody.insertAdjacentHTML("beforeend", row);
+      });
+    }
+
+    function logout() {
+      signOut(auth).then(() => window.location.href = "portal.html");
+    }
+  </script>
+</body>
+</html>
