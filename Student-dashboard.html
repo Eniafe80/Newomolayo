@@ -1,24 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Dashboard | Omolayo</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard | Omolayo</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    .profile {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .profile img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-right: 1rem;
+    }
+    .profile-details {
+      font-size: 1rem;
+    }
+    .download-area {
+      text-align: right;
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
 <section class="container">
-  <h1>Welcome, <span id="studentName"></span>!</h1>
+  <h1>Student Dashboard</h1>
 
-  <h2>Your Results</h2>
-  <table id="studentResults" class="data-table">
-    <thead><tr><th>Subject</th><th>Score</th><th>Date</th></tr></thead>
-    <tbody></tbody>
-  </table>
-  <button id="downloadBtn" class="cta-btn">Download Results</button>
+  <!-- 👤 PROFILE -->
+  <div class="profile">
+    <img src="https://ui-avatars.com/api/?name=Student&background=003366&color=fff" alt="Avatar" />
+    <div class="profile-details">
+      <strong id="studentName"></strong><br>
+      Class: <span id="studentClass">Loading...</span>
+    </div>
+  </div>
+
+  <!-- 📄 DOWNLOAD RESULTS -->
+  <div class="download-area">
+    <button id="downloadBtn" class="cta-btn">Download Results (PDF)</button>
+  </div>
+
+  <!-- 📊 RESULTS -->
+  <div id="resultsPDF">
+    <h2>Your Results</h2>
+    <table id="studentResults" class="data-table">
+      <thead><tr><th>Subject</th><th>Score</th><th>Date</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
   <hr />
 
+  <!-- 📅 TIMETABLE -->
   <h2>Your Timetable</h2>
   <table id="timetable" class="data-table">
     <thead><tr><th>Day</th><th>Subject</th><th>Time</th></tr></thead>
@@ -27,6 +64,7 @@
 
   <hr />
 
+  <!-- 📢 ANNOUNCEMENTS -->
   <h2>Announcements</h2>
   <ul id="announcements"></ul>
 
@@ -37,7 +75,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAm7bKotH4ly67inPPdruhppa42fWYH5OY",
@@ -52,29 +90,32 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let studentEmail = "";
+let studentEmail = "", studentClass = "", dataForPDF = [];
 
 onAuthStateChanged(auth, async user => {
   if (!user) return window.location.href = "portal.html";
-
   studentEmail = user.email;
   document.getElementById("studentName").textContent = studentEmail;
+
+  // Get class from Firestore
+  const snap = await getDoc(doc(db, "users", user.uid));
+  if (snap.exists()) {
+    studentClass = snap.data().class || "N/A";
+    document.getElementById("studentClass").textContent = studentClass;
+  }
 
   // Load results
   const resQ = query(collection(db, "results"), where("studentEmail", "==", studentEmail));
   const resSnaps = await getDocs(resQ);
   const tbody = document.querySelector("#studentResults tbody");
   tbody.innerHTML = "";
-  const dataForDownload = [];
+  dataForPDF = [];
   resSnaps.forEach(docSnap => {
     const r = docSnap.data();
-    const date = r.timestamp.toDate().toLocaleDateString();
-    tbody.insertAdjacentHTML("beforeend",
-      `<tr><td>${r.subject}</td><td>${r.score}</td><td>${date}</td></tr>`
-    );
-    dataForDownload.push({ subject: r.subject, score: r.score, date });
+    const date = r.timestamp?.toDate().toLocaleDateString() || "N/A";
+    tbody.innerHTML += `<tr><td>${r.subject}</td><td>${r.score}</td><td>${date}</td></tr>`;
+    dataForPDF.push({ subject: r.subject, score: r.score, date });
   });
-  setupDownload(dataForDownload);
 
   // Load timetable
   const ttQ = query(collection(db, "timetables"), where("studentEmail", "==", studentEmail));
@@ -83,36 +124,28 @@ onAuthStateChanged(auth, async user => {
   tbodyTT.innerHTML = "";
   ttSnaps.forEach(docSnap => {
     const t = docSnap.data();
-    tbodyTT.insertAdjacentHTML("beforeend",
-      `<tr><td>${t.day}</td><td>${t.subject}</td><td>${t.time}</td></tr>`
-    );
+    tbodyTT.innerHTML += `<tr><td>${t.day}</td><td>${t.subject}</td><td>${t.time}</td></tr>`;
   });
 
   // Load announcements
-  const annQ = collection(db, "announcements");
-  const annSnaps = await getDocs(annQ);
+  const annSnaps = await getDocs(collection(db, "announcements"));
   const ul = document.getElementById("announcements");
   ul.innerHTML = "";
   annSnaps.forEach(docSnap => {
-    ul.insertAdjacentHTML("beforeend", `<li>${docSnap.data().text}</li>`);
+    ul.innerHTML += `<li>${docSnap.data().text}</li>`;
   });
 });
 
-function setupDownload(items) {
-  const btn = document.getElementById("downloadBtn");
-  btn.onclick = () => {
-    let csv = "Subject,Score,Date\n" + items.map(r => `${r.subject},${r.score},${r.date}`).join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url; a.download = "results.csv"; a.click();
-    URL.revokeObjectURL(url);
-  };
-}
+// 📄 PDF Export
+document.getElementById("downloadBtn").onclick = () => {
+  const pdfEl = document.getElementById("resultsPDF");
+  html2pdf().from(pdfEl).save("Omolayo_Results.pdf");
+};
 
+// 🔐 Logout
 function logout() {
   signOut(auth).then(() => window.location.href = "portal.html");
 }
 </script>
 </body>
-</html>
+      </html>
