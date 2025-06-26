@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard | Omolayo</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<section class="container">
+  <h1>Welcome, <span id="studentName"></span>!</h1>
+
+  <h2>Your Results</h2>
+  <table id="studentResults" class="data-table">
+    <thead><tr><th>Subject</th><th>Score</th><th>Date</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <button id="downloadBtn" class="cta-btn">Download Results</button>
+
+  <hr />
+
+  <h2>Your Timetable</h2>
+  <table id="timetable" class="data-table">
+    <thead><tr><th>Day</th><th>Subject</th><th>Time</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+  <hr />
+
+  <h2>Announcements</h2>
+  <ul id="announcements"></ul>
+
+  <hr />
+  <button onclick="logout()" class="cta-btn" style="background:#ccc;">Logout</button>
+</section>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAm7bKotH4ly67inPPdruhppa42fWYH5OY",
+  authDomain: "omolayoschool-29c90.firebaseapp.com",
+  projectId: "omolayoschool-29c90",
+  storageBucket: "omolayoschool-29c90.firebasestorage.app",
+  messagingSenderId: "92639111131",
+  appId: "1:92639111131:web:d7cc04cff3da1b97d0e9fe"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let studentEmail = "";
+
+onAuthStateChanged(auth, async user => {
+  if (!user) return window.location.href = "portal.html";
+
+  studentEmail = user.email;
+  document.getElementById("studentName").textContent = studentEmail;
+
+  // Load results
+  const resQ = query(collection(db, "results"), where("studentEmail", "==", studentEmail));
+  const resSnaps = await getDocs(resQ);
+  const tbody = document.querySelector("#studentResults tbody");
+  tbody.innerHTML = "";
+  const dataForDownload = [];
+  resSnaps.forEach(docSnap => {
+    const r = docSnap.data();
+    const date = r.timestamp.toDate().toLocaleDateString();
+    tbody.insertAdjacentHTML("beforeend",
+      `<tr><td>${r.subject}</td><td>${r.score}</td><td>${date}</td></tr>`
+    );
+    dataForDownload.push({ subject: r.subject, score: r.score, date });
+  });
+  setupDownload(dataForDownload);
+
+  // Load timetable
+  const ttQ = query(collection(db, "timetables"), where("studentEmail", "==", studentEmail));
+  const ttSnaps = await getDocs(ttQ);
+  const tbodyTT = document.querySelector("#timetable tbody");
+  tbodyTT.innerHTML = "";
+  ttSnaps.forEach(docSnap => {
+    const t = docSnap.data();
+    tbodyTT.insertAdjacentHTML("beforeend",
+      `<tr><td>${t.day}</td><td>${t.subject}</td><td>${t.time}</td></tr>`
+    );
+  });
+
+  // Load announcements
+  const annQ = collection(db, "announcements");
+  const annSnaps = await getDocs(annQ);
+  const ul = document.getElementById("announcements");
+  ul.innerHTML = "";
+  annSnaps.forEach(docSnap => {
+    ul.insertAdjacentHTML("beforeend", `<li>${docSnap.data().text}</li>`);
+  });
+});
+
+function setupDownload(items) {
+  const btn = document.getElementById("downloadBtn");
+  btn.onclick = () => {
+    let csv = "Subject,Score,Date\n" + items.map(r => `${r.subject},${r.score},${r.date}`).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "results.csv"; a.click();
+    URL.revokeObjectURL(url);
+  };
+}
+
+function logout() {
+  signOut(auth).then(() => window.location.href = "portal.html");
+}
+</script>
+</body>
+</html>
