@@ -1,34 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Admin Login</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <section class="container login-section">
-    <h2>Admin Login</h2>
-    <form id="adminLoginForm">
-      <label>Username: <input type="text" id="adminUsername" required></label>
-      <label>Password: <input type="password" id="adminPassword" required></label>
-      <button type="submit" class="cta-btn">Login</button>
+  <script>
+    if (localStorage.getItem("role") !== "admin") {
+      window.location.href = "admin-login.html";
+    }
+  </script>
+
+  <section class="container">
+    <h1>Welcome Admin, <span id="adminName"></span></h1>
+
+    <h2>Upload Student Results</h2>
+    <form id="resultForm" class="result-entry">
+      <label>Student Name: <input type="text" id="studentName" required></label>
+      <label>Class:
+        <select id="studentClass" required>
+          <option value="">Select Class</option>
+          <option value="Creche">Creche</option>
+          <option value="Nursery 1">Nursery 1</option>
+          <option value="Nursery 2">Nursery 2</option>
+          <option value="Primary 1">Primary 1</option>
+          <option value="Primary 2">Primary 2</option>
+          <option value="Primary 3">Primary 3</option>
+          <option value="Primary 4">Primary 4</option>
+          <option value="Primary 5">Primary 5</option>
+          <option value="Primary 6">Primary 6</option>
+          <option value="JSS 1">JSS 1</option>
+          <option value="JSS 2">JSS 2</option>
+          <option value="JSS 3">JSS 3</option>
+        </select>
+      </label>
+
+      <div id="subjectsWrapper">
+        <div class="subject-row">
+          <input type="text" placeholder="Subject" class="subject" required>
+          <input type="number" placeholder="Score" class="score" required>
+        </div>
+      </div>
+
+      <button type="button" onclick="addSubjectRow()" class="cta-btn">➕ Add Another Subject</button>
+      <button type="submit" class="cta-btn">Submit Result</button>
     </form>
-    <p id="login-error" style="color: red; display: none;">Invalid credentials</p>
+
+    <p id="resultMsg" style="margin-top: 1rem;"></p>
+
+    <button onclick="logout()" class="cta-btn" style="margin-top: 2rem;">🔒 Logout</button>
   </section>
 
-  <script>
-    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const user = document.getElementById('adminUsername').value;
-      const pass = document.getElementById('adminPassword').value;
+  <!-- ✅ Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
-      if (user === 'admin1' && pass === 'admin123') {
-        localStorage.setItem("role", "admin");
-        localStorage.setItem("studentName", user); // optional
-        window.location.href = 'admin-dashboard.html';
-      } else {
-        document.getElementById('login-error').style.display = 'block';
+    const firebaseConfig = {
+      apiKey: "AIzaSyAm7bKotH4ly67inPPdruhppa42fWYH5OY",
+      authDomain: "omolayoschool-29c90.firebaseapp.com",
+      projectId: "omolayoschool-29c90",
+      storageBucket: "omolayoschool-29c90.appspot.com",
+      messagingSenderId: "92639111131",
+      appId: "1:92639111131:web:d7cc04cff3da1b97d0e9fe"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Add subject rows
+    window.addSubjectRow = function () {
+      const wrapper = document.getElementById('subjectsWrapper');
+      const div = document.createElement('div');
+      div.className = 'subject-row';
+      div.innerHTML = `
+        <input type="text" placeholder="Subject" class="subject" required>
+        <input type="number" placeholder="Score" class="score" required>
+      `;
+      wrapper.appendChild(div);
+    };
+
+    // Submit to Firebase
+    document.getElementById('resultForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('studentName').value;
+      const studentClass = document.getElementById('studentClass').value;
+      const subjects = document.querySelectorAll('.subject');
+      const scores = document.querySelectorAll('.score');
+
+      const results = [];
+      for (let i = 0; i < subjects.length; i++) {
+        if (subjects[i].value && scores[i].value) {
+          results.push({
+            subject: subjects[i].value,
+            score: Number(scores[i].value)
+          });
+        }
+      }
+
+      try {
+        await addDoc(collection(db, "results"), {
+          name,
+          class: studentClass,
+          scores: results,
+          submittedAt: new Date()
+        });
+
+        document.getElementById('resultMsg').textContent = "✅ Result uploaded successfully!";
+        document.getElementById('resultForm').reset();
+        document.getElementById('subjectsWrapper').innerHTML = `
+          <div class="subject-row">
+            <input type="text" placeholder="Subject" class="subject" required>
+            <input type="number" placeholder="Score" class="score" required>
+          </div>`;
+      } catch (err) {
+        console.error(err);
+        document.getElementById('resultMsg').textContent = "❌ Error saving result!";
       }
     });
+
+    // Logout
+    window.logout = function () {
+      localStorage.clear();
+      window.location.href = "admin-login.html";
+    };
+
+    // Show name
+    document.getElementById("adminName").textContent = localStorage.getItem("adminName") || "Admin";
   </script>
 </body>
-</html>
+                                       </html>
