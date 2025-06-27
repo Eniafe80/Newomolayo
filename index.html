@@ -2,39 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Omolayo International Schools</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
-<header>
-  <img src="logo.png" alt="Omolayo Logo" height="50" />
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="admissions.html">Admissions</a>
-    <a href="academics.html">Academics</a>
-    <a href="portal.html">Login</a>
-  </nav>
-</header>
+<!-- Sidebar Menu -->
+<div id="menuToggle" class="hamburger">&#9776;</div>
+<nav id="sidebar" class="sidebar">
+  <a href="index.html">Home</a>
+  <a href="academics.html">Academics</a>
+  <a href="admissions.html">Admissions</a>
+  <a href="portal.html">Login</a>
+</nav>
 
 <!-- Hero -->
-<section class="hero-slider">
+<section class="hero-slider" id="heroSlider">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <h1>Welcome to Omolayo International Schools</h1>
     <p>Where Character Meets Excellence</p>
-    <a href="admissions.html" class="cta-btn">Apply Now</a>
   </div>
 </section>
 
-<!-- Campus -->
+<!-- Class Tags -->
 <section class="section colored-section">
-  <h2>Our Campus</h2>
-  <p>Clean, secure and welcoming environment for quality learning and social growth.</p>
+  <h2>We Are Admitting Into:</h2>
+  <div class="choose-boxes">
+    <div class="choose-box">✔️ Crèche</div>
+    <div class="choose-box">✔️ Nursery 1 & 2</div>
+    <div class="choose-box">✔️ Primary 1 – 6</div>
+    <div class="choose-box">✔️ JSS 1 – 3</div>
+  </div>
+  <br>
+  <a href="admissions.html" class="cta-btn">Enroll Now</a>
+  <a href="#tourVideo" class="cta-btn">Take a Tour</a>
 </section>
 
 <!-- Mission & Vision -->
@@ -53,47 +58,34 @@
 <section class="section colored-section">
   <h2>Why Choose Us?</h2>
   <div class="choose-boxes">
-    <div class="choose-box">Qualified and Passionate Teachers</div>
-    <div class="choose-box">Strong Academic Foundation</div>
-    <div class="choose-box">Clean, Equipped Classrooms</div>
-    <div class="choose-box">Co-curricular Activities</div>
-    <div class="choose-box">Mentorship and Leadership Programs</div>
+    <div class="choose-box">✅ 24-Hour Power Supply</div>
+    <div class="choose-box">✅ School Bus Service</div>
+    <div class="choose-box">✅ Conducive Learning Environment</div>
+    <div class="choose-box">✅ Standard Facilities</div>
   </div>
 </section>
 
 <!-- Founder -->
 <section class="section">
   <h2>Meet Our Founder</h2>
-  <img src="founder.jpg" alt="Founder - Deaconess Fumi" class="profile" />
-  <p>Deaconess Fumi founded Omolayo International Schools with a vision to inspire discipline, character, and academic excellence in every child.</p>
+  <img src="founder.jpg" alt="Founder - Deaconess Fumi" class="profile">
+  <p>Deaconess Fumi founded Omolayo International Schools to inspire discipline, character, and academic excellence in every child.</p>
 </section>
 
 <!-- Proprietress -->
 <section class="section colored-section">
   <h2>Our Proprietress</h2>
-  <img src="proprietress.jpg" alt="Proprietress - Dr. Omolayo" class="profile" />
-  <p>Dr. Omolayo is a passionate educationist and administrator committed to nurturing excellence.</p>
+  <img src="proprietress.jpg" alt="Proprietress - Dr. Omolayo" class="profile">
+  <p>Dr. Omolayo is a passionate educationist committed to nurturing excellence through modern educational practices.</p>
 </section>
 
-<!-- Admission Info -->
-<section class="section">
-  <h2>Now Admitting</h2>
-  <p>We are currently admitting students into:</p>
-  <ul style="list-style-type: none; padding: 0; font-weight: bold;">
-    <li>✔️ Crèche</li>
-    <li>✔️ Nursery 1 & 2</li>
-    <li>✔️ Primary 1 – 6</li>
-    <li>✔️ JSS 1 – 3</li>
-  </ul>
-</section>
-
-<!-- Video Tour -->
-<section class="container video-gallery">
-  <h2>Take a Tour</h2>
+<!-- School Video Tour -->
+<section class="section" id="tourVideo">
+  <h2>Take a Virtual Tour</h2>
   <div class="media-wrap">
     <video controls poster="placeholder1.jpg">
-      <source src="placeholder-video.mp4" type="video/mp4" />
-      Your browser doesn’t support HTML5 video.
+      <source src="placeholder-video.mp4" type="video/mp4">
+      Your browser doesn't support HTML5 video.
     </video>
   </div>
 </section>
@@ -101,7 +93,6 @@
 <!-- Gallery -->
 <section class="section colored-section">
   <h2>Photo Gallery</h2>
-  <p>Get a glimpse of life at Omolayo International Schools</p>
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
     <a href="gallery1.jpg" data-lightbox="school-gallery"><img src="gallery1.jpg" alt="Gallery 1" style="width: 200px; border-radius: 8px;"></a>
     <a href="gallery2.jpg" data-lightbox="school-gallery"><img src="gallery2.jpg" alt="Gallery 2" style="width: 200px; border-radius: 8px;"></a>
@@ -114,10 +105,9 @@
 <footer>
   <div class="footer-content">
     <div>
-      <h4>Contact Us</h4>
-      <p>Pora Zone 6, Ajebo Road, Kemta, Idi Aba, Abeokuta</p>
-      <p>📞 0703 510 2126, 0807 675 4105</p>
-      <p>📧 omolayogroup@gmail.com</p>
+      <img src="logo.png" alt="School Logo" style="height: 50px; margin-bottom: 10px;">
+      <p>Pora Zone 6, Ajebo Rd, Kemta, Idi Aba, Abeokuta</p>
+      <p>📞 0703 510 2126 | 📧 omolayogroup@gmail.com</p>
     </div>
     <div>
       <h4>Quick Links</h4>
@@ -127,20 +117,19 @@
     </div>
     <div>
       <h4>Follow Us</h4>
-      <a href="https://facebook.com/omolayoschools" style="color: white;">Facebook</a><br>
-      <a href="https://wa.me/2348076754105" style="color: white;">WhatsApp</a>
+      <a href="https://facebook.com/omolayoschools"><img src="https://img.icons8.com/fluency/48/facebook-new.png" width="24"/></a>
+      <a href="https://wa.me/2348076754105"><img src="https://img.icons8.com/fluency/48/whatsapp.png" width="24"/></a>
     </div>
   </div>
-  <p style="text-align:center; margin-top: 2rem;">&copy; 2025 Omolayo International Schools</p>
+  <p style="text-align:center; margin-top: 1rem;">&copy; 2025 Omolayo International Schools</p>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-<script src="main.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelector("footer")?.classList.add('visible');
-  });
-</script>
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/2348076754105" class="whatsapp-float" title="Chat with us on WhatsApp">
+  <img src="https://img.icons8.com/fluency/48/whatsapp.png" style="width:60px;height:60px;" />
+</a>
 
+<script src="main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 </body>
-    </html>
+  </html>
