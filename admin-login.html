@@ -12,10 +12,10 @@
 
     <form id="adminLoginForm">
       <label for="adminUsername">Username:</label>
-      <input type="text" id="adminUsername" required />
+      <input type="text" id="adminUsername" placeholder="e.g. admin1" required />
 
       <label for="adminPassword">Password:</label>
-      <input type="password" id="adminPassword" required />
+      <input type="password" id="adminPassword" placeholder="••••••••" required />
 
       <button type="submit" class="cta-btn">Login</button>
     </form>
@@ -28,10 +28,12 @@
   <script>
     document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
       e.preventDefault();
+      alert("Login attempt started ✅"); // Debugging aid
+
       const user = document.getElementById('adminUsername').value.trim();
       const pass = document.getElementById('adminPassword').value.trim();
 
-      // Default login
+      // Default login credentials (username: admin1, password: admin123)
       if (user === 'admin1' && pass === 'admin123') {
         localStorage.setItem("role", "admin");
         localStorage.setItem("adminName", user);
@@ -42,4 +44,4 @@
     });
   </script>
 </body>
-</html>
+  </html>
