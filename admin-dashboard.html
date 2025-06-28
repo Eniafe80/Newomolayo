@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Admin Dashboard | Omolayo</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <section class="container">
@@ -33,7 +33,7 @@
           <option value="student">Student</option>
         </select>
       </label><br>
-      <label>Class (e.g. Primary 3): <input type="text" id="newClass" /></label><br>
+      <label>Class (e.g., Primary 3): <input type="text" id="newClass" /></label><br>
       <button type="submit" class="cta-btn">Create User</button>
     </form>
 
@@ -50,7 +50,7 @@
       apiKey: "AIzaSyAm7bKotH4ly67inPPdruhppa42fWYH5OY",
       authDomain: "omolayoschool-29c90.firebaseapp.com",
       projectId: "omolayoschool-29c90",
-      storageBucket: "omolayoschool-29c90.firebasestorage.app",
+      storageBucket: "omolayoschool-29c90.appspot.com",
       messagingSenderId: "92639111131",
       appId: "1:92639111131:web:d7cc04cff3da1b97d0e9fe"
     };
@@ -59,50 +59,49 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // ✅ Save homepage popup message
-    document.getElementById("messageForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const msg = document.getElementById("popupMessage").value;
-      await setDoc(doc(db, "settings", "popup"), { message: msg });
-      alert("Message saved!");
+    // ✅ Ensure user is logged in
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        window.location.href = "portal.html";
+      }
     });
 
-    // ✅ Add new teacher/student account
-    document.getElementById("addUserForm").addEventListener("submit", async (e) => {
+    // Post homepage popup message
+    document.getElementById("messageForm").addEventListener("submit", async e => {
       e.preventDefault();
-      const email = document.getElementById("newEmail").value;
+      const msg = document.getElementById("popupMessage").value.trim();
+      if (msg) {
+        await setDoc(doc(db, "settings", "popup"), { message: msg });
+        alert("Message saved!");
+        document.getElementById("popupMessage").value = "";
+      }
+    });
+
+    // Add new teacher/student account
+    document.getElementById("addUserForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const email = document.getElementById("newEmail").value.trim();
       const password = document.getElementById("newPassword").value;
       const role = document.getElementById("newRole").value;
-      const classGroup = document.getElementById("newClass").value;
+      const classGroup = document.getElementById("newClass").value.trim();
 
       try {
         const userCred = await createUserWithEmailAndPassword(auth, email, password);
         const uid = userCred.user.uid;
-
-        await setDoc(doc(db, "users", uid), {
-          email,
-          role,
-          class: classGroup
-        });
-
+        await setDoc(doc(db, "users", uid), { email, role, class: classGroup });
         alert("✅ User created successfully!");
+        document.getElementById("addUserForm").reset();
       } catch (err) {
         alert("⚠️ Error: " + err.message);
       }
     });
 
-    // ✅ Logout function
-    function logout() {
+    // Logout function
+    window.logout = () => {
       signOut(auth).then(() => {
         window.location.href = "portal.html";
       });
-    }
-
-    // ✅ Security: Block if not admin
-    onAuthStateChanged(auth, (user) => {
-      // Optionally add admin check later
-      if (!user) window.location.href = "portal.html";
-    });
+    };
   </script>
 </body>
-</html>
+  </html>
