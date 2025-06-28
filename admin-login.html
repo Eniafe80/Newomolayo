@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Admin Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
@@ -11,8 +11,8 @@
     <h2>🔐 Admin Login</h2>
 
     <form id="adminLoginForm">
-      <label for="adminUsername">Username:</label>
-      <input type="text" id="adminUsername" placeholder="e.g. admin1" required />
+      <label for="adminEmail">Email:</label>
+      <input type="email" id="adminEmail" placeholder="admin@example.com" required />
 
       <label for="adminPassword">Password:</label>
       <input type="password" id="adminPassword" placeholder="••••••••" required />
@@ -21,27 +21,46 @@
     </form>
 
     <p id="login-error" style="color: red; display: none; margin-top: 1rem;">
-      ❌ Invalid username or password.
+      ❌ Invalid email or password.
     </p>
   </section>
 
-  <script>
-    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+  <!-- ✅ Firebase Login Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAm7bKotH4ly67inPPdruhppa42fWYH5OY",
+      authDomain: "omolayoschool-29c90.firebaseapp.com",
+      projectId: "omolayoschool-29c90",
+      storageBucket: "omolayoschool-29c90.appspot.com",
+      messagingSenderId: "92639111131",
+      appId: "1:92639111131:web:d7cc04cff3da1b97d0e9fe"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      alert("Login attempt started ✅"); // Debugging aid
 
-      const user = document.getElementById('adminUsername').value.trim();
-      const pass = document.getElementById('adminPassword').value.trim();
+      const email = document.getElementById("adminEmail").value;
+      const password = document.getElementById("adminPassword").value;
 
-      // Default login credentials (username: admin1, password: admin123)
-      if (user === 'admin1' && pass === 'admin123') {
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
         localStorage.setItem("role", "admin");
-        localStorage.setItem("adminName", user);
-        window.location.href = 'admin-dashboard.html';
-      } else {
-        document.getElementById('login-error').style.display = 'block';
+        localStorage.setItem("adminName", email);
+
+        window.location.href = "admin-dashboard.html";
+      } catch (error) {
+        console.error(error);
+        document.getElementById("login-error").style.display = "block";
       }
     });
   </script>
 </body>
-  </html>
+        </html>
